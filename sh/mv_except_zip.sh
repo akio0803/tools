@@ -1,11 +1,9 @@
 #!/bin/bash
 
 PROGNAME=$(basename $0)
-DIR=$(pwd)
 
 usage(){
-  echo "USAGE: $PROGNAME [OPTIONS] FILE"
-  echo
+  echo "Usage: $PROGNAME [OPTIONS] FILE"
   echo "OPTIONS:"
   echo "  -h, --help"
   echo "  [--from_dir from_dir]"
@@ -25,7 +23,7 @@ do
       if [ -z "$2" ] || [[ "$2" =~ ^-+ ]]; then
         shift 1
       else
-        DIR="$2"
+        cd "$2"
         shift 2
       fi
       ;;
@@ -44,9 +42,9 @@ do
   esac
 done
 
-cd $DIR
+DESTNAME=$(basename $TO_DIR)
 
-ls -1 | grep -v zip | grep -v $(basename $TO_DIR) | while read line
+ls -1 | grep -v zip | grep -v "$DESTNAME" | while read line
 do
   mv $line $TO_DIR
 done
