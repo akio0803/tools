@@ -1,10 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
 PROGNAME=$(basename $0)
 DIR=$(pwd)
 
 usage(){
-  echo "Usage: $PROGNAME [OPTIONS] FILE"
+  echo "USAGE: $PROGNAME [OPTIONS] FILE"
+  echo
   echo "OPTIONS:"
   echo "  -h, --help"
   echo "  [--from_dir from_dir]"
@@ -21,7 +22,7 @@ do
       exit 1
       ;;
     '--from_dir' )
-      if [[ -z "$2" ]] || [[ "$2" =~ ^-+ ]]; then
+      if [ -z "$2" ] || [[ "$2" =~ ^-+ ]]; then
         shift 1
       else
         DIR="$2"
@@ -29,7 +30,7 @@ do
       fi
       ;;
     '--to_dir' )
-      if [[ -z "$2" ]] || [[ "$2" =~ ^-+ ]]; then
+      if [ -z "$2" ] || [[ "$2" =~ ^-+ ]]; then
         echo "$PROGNAME: option requires an argument -- $1" 1>&2
         exit 1
       fi
@@ -45,7 +46,7 @@ done
 
 cd $DIR
 
-ls -1 | grep -v zip | while read line
+ls -1 | grep -v zip | grep -v $(basename $TO_DIR) | while read line
 do
   mv $line $TO_DIR
 done
